@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML, CSS e JavaScript</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <style>
+        .curso-card .card-img-top {
+            height: 220px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar bg-dark navbar-expand-lg bg-body-tertiary border-bottom border-body" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="./img/school_24dp_F19E39_FILL0_wght400_GRAD0_opsz24.svg" alt="Logo" width="30" height="24"
+                    class="d-inline-block align-text-top">
+                Cursorama
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a href="./cursos.html" class="nav-link">Cursos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="./trilhas.html" class="nav-link">Trilhas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="./projetos.html" class="nav-link">Projetos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="./sobre.html" class="nav-link">Sobre</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="./contato.html" class="nav-link">Contato</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </nav>
+
+    <div class="container">
+        <h2>Cursos Disponíveis</h2>
+    </div>
+    <hr>
+
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card curso-card h-100">
+                    <img src="./img/bigdata.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Curso Big Data</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the card’s content.</p>
+                        <a href="#" class="btn btn-primary">Inscreva-se</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card curso-card h-100">
+                    <img src="./img/react.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Curso React</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the card’s content.</p>
+                        <a href="#" class="btn btn-primary">Inscreva-se</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card curso-card h-100">
+                    <img src="./img/typescript.jpeg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Curso Typescript</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the card’s content.</p>
+                        <a href="#" class="btn btn-primary">Inscreva-se</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/popper.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+</body>
+
+</html>
