@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursorama</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <style>
+        .curso-card .card-img-top {
+            height: 220px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar bg-dark navbar-expand-lg bg-body-tertiary border-bottom border-body" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="./img/school_24dp_F19E39_FILL0_wght400_GRAD0_opsz24.svg" alt="Logo" width="30" height="24"
+                    class="d-inline-block align-text-top">
+                Cursorama
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a href="./cursos.html" class="nav-link">Cursos</a></li>
+                    <li class="nav-item"><a href="./trilhas.html" class="nav-link">Trilhas</a></li>
+                    <li class="nav-item"><a href="./projetos.html" class="nav-link">Projetos</a></li>
+                    <li class="nav-item"><a href="./sobre.html" class="nav-link">Sobre</a></li>
+                    <li class="nav-item"><a href="./contato.html" class="nav-link">Contato</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h2>Cursos</h2>
+    </div>
+
+    <div class="container mt-4">
+        <h4>Cadastrar Curso</h4>
+
+        <form id="formCurso">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <input type="text" id="titulo" class="form-control" placeholder="Título do Curso" required>
+                </div>
+
+                <div class="col-md-4">
+                    <input type="text" id="categoria" class="form-control" placeholder="Categoria" required>
+                </div>
+
+                <div class="col-md-4">
+                    <input type="text" id="instrutor" class="form-control" placeholder="Instrutor" required>
+                </div>
+
+                <div class="col-md-4">
+                    <input type="text" id="nivel" class="form-control"
+                        placeholder="Nível (Iniciante, Intermediário...)" required>
+                </div>
+
+                <div class="col-md-4">
+                    <input type="number" id="horas" class="form-control" placeholder="Total de Horas" required>
+                </div>
+
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-success w-100">Cadastrar Curso</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="container mt-5">
+        <h4>Cadastrar Módulo</h4>
+
+        <form id="formModulo">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <select id="cursoSelect" class="form-control" required>
+                        <option value="">Selecione o Curso</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <input type="text" id="tituloModulo" class="form-control" placeholder="Título do Módulo" required>
+                </div>
+
+                <div class="col-md-4">
+                    <input type="number" id="ordemModulo" class="form-control" placeholder="Ordem" required>
+                </div>
+
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-warning w-100">Cadastrar Módulo</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="container mt-5">
+        <h4>Cadastrar Aula</h4>
+
+        <form id="formAula">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <select id="moduloSelect" class="form-control" required>
+                        <option value="">Selecione o Módulo</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <input type="text" id="tituloAula" class="form-control" placeholder="Título da Aula" required>
+                </div>
+
+                <div class="col-md-4">
+                    <input type="text" id="tipoAula" class="form-control" placeholder="Tipo (Vídeo, Texto, Quiz)" required>
+                </div>
+
+                <div class="col-md-4">
+                    <input type="text" id="urlAula" class="form-control" placeholder="URL do Conteúdo">
+                </div>
+
+                <div class="col-md-4">
+                    <input type="number" id="duracaoAula" class="form-control" placeholder="Duração em minutos" required>
+                </div>
+
+                <div class="col-md-4">
+                    <input type="number" id="ordemAula" class="form-control" placeholder="Ordem" required>
+                </div>
+
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-info w-100">Cadastrar Aula</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="container mt-5">
+        <h4>Cursos Cadastrados</h4>
+        <div id="listaCursos" class="row g-4 mt-2"></div>
+    </div>
+
+    <hr>
+
+    <div class="container mt-4 mb-5">
+        <h4>Cursos Disponíveis</h4>
+
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card curso-card h-100">
+                    <img src="./img/bigdata.jpg" class="card-img-top" alt="Curso Big Data">
+                    <div class="card-body">
+                        <h5 class="card-title">Curso Big Data</h5>
+                        <p class="card-text">Curso introdutório de Big Data.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card curso-card h-100">
+                    <img src="./img/react.jpg" class="card-img-top" alt="Curso React">
+                    <div class="card-body">
+                        <h5 class="card-title">Curso React</h5>
+                        <p class="card-text">Aprenda React do zero.</p>
+                        <a href="./Cursos/react.html" class="btn btn-primary">Ver curso</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/popper.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/cursos.js"></script>
+
+</body>
+</html>
