@@ -43,7 +43,10 @@ const listaCursos = document.getElementById("listaCursos");
 const cursoSelect = document.getElementById("cursoSelect");
 const moduloSelect = document.getElementById("moduloSelect");
 
-// ================== CURSO ==================
+const modalTituloCurso = document.getElementById("modalTituloCurso");
+const modalConteudoCurso = document.getElementById("modalConteudoCurso");
+
+// CADASTRAR CURSO
 formCurso.addEventListener("submit", function (event) {
     event.preventDefault();
 
@@ -52,8 +55,6 @@ formCurso.addEventListener("submit", function (event) {
     const instrutor = document.getElementById("instrutor").value;
     const nivel = document.getElementById("nivel").value;
     const horas = document.getElementById("horas").value;
-
-    // 🔥 NOVO
     const imagem = document.getElementById("imagem").value || "./img/react.jpg";
 
     const novoCurso = new Curso(
@@ -74,7 +75,7 @@ formCurso.addEventListener("submit", function (event) {
     formCurso.reset();
 });
 
-// ================== MÓDULO ==================
+// CADASTRAR MÓDULO
 formModulo.addEventListener("submit", function (event) {
     event.preventDefault();
 
@@ -97,7 +98,7 @@ formModulo.addEventListener("submit", function (event) {
     formModulo.reset();
 });
 
-// ================== AULA ==================
+// CADASTRAR AULA
 formAula.addEventListener("submit", function (event) {
     event.preventDefault();
 
@@ -125,7 +126,7 @@ formAula.addEventListener("submit", function (event) {
     formAula.reset();
 });
 
-// ================== SELECTS ==================
+// ATUALIZAR SELECT DE CURSOS
 function atualizarSelectCursos() {
     cursoSelect.innerHTML = '<option value="">Selecione o Curso</option>';
 
@@ -138,11 +139,14 @@ function atualizarSelectCursos() {
     });
 }
 
+// ATUALIZAR SELECT DE MÓDULOS
 function atualizarSelectModulos() {
     moduloSelect.innerHTML = '<option value="">Selecione o Módulo</option>';
 
     modulos.forEach(function (modulo) {
-        const curso = cursos.find(c => c.id === modulo.cursoId);
+        const curso = cursos.find(function (curso) {
+            return curso.id === modulo.cursoId;
+        });
 
         moduloSelect.innerHTML += `
             <option value="${modulo.id}">
@@ -152,57 +156,72 @@ function atualizarSelectModulos() {
     });
 }
 
-// ================== RENDER ==================
-function renderizarCursos() {
-    listaCursos.innerHTML = "";
+// GERAR HTML DOS MÓDULOS E AULAS
+function gerarModulosEAulas(cursoId) {
+    const modulosDoCurso = modulos
+        .filter(function (modulo) {
+            return modulo.cursoId === cursoId;
+        })
+        .sort(function (a, b) {
+            return a.ordem - b.ordem;
+        });
 
-    cursos.forEach(function (curso) {
-        const modulosDoCurso = modulos
-            .filter(m => m.cursoId === curso.id)
-            .sort((a, b) => a.ordem - b.ordem);
+    let listaModulos = "";
 
-        let listaModulos = "";
-
-        modulosDoCurso.forEach(function (modulo) {
-            const aulasDoModulo = aulas
-                .filter(a => a.moduloId === modulo.id)
-                .sort((a, b) => a.ordem - b.ordem);
-
-            let listaAulas = "";
-
-            aulasDoModulo.forEach(function (aula) {
-                listaAulas += `
-                    <li>
-                        Aula ${aula.ordem}: ${aula.titulo}
-                        <br>
-                        <small>Tipo: ${aula.tipo} | Duração: ${aula.duracao} min</small>
-                    </li>
-                `;
+    modulosDoCurso.forEach(function (modulo) {
+        const aulasDoModulo = aulas
+            .filter(function (aula) {
+                return aula.moduloId === modulo.id;
+            })
+            .sort(function (a, b) {
+                return a.ordem - b.ordem;
             });
 
-            if (!listaAulas) {
-                listaAulas = "<li>Nenhuma aula cadastrada.</li>";
-            }
+        let listaAulas = "";
 
-            listaModulos += `
+        aulasDoModulo.forEach(function (aula) {
+            listaAulas += `
                 <li>
-                    <strong>Módulo ${modulo.ordem}:</strong> ${modulo.titulo}
-                    <ul>${listaAulas}</ul>
+                    <strong>Aula ${aula.ordem}:</strong> ${aula.titulo}<br>
+                    <small>Tipo: ${aula.tipo} | Duração: ${aula.duracao} min</small>
                 </li>
             `;
         });
 
-        if (!listaModulos) {
-            listaModulos = "<li>Nenhum módulo cadastrado.</li>";
+        if (listaAulas === "") {
+            listaAulas = "<li>Nenhuma aula cadastrada.</li>";
         }
 
-        // 🔥 CARD COM IMAGEM
+        listaModulos += `
+            <li>
+                <strong>Módulo ${modulo.ordem}:</strong> ${modulo.titulo}
+                <ul>${listaAulas}</ul>
+            </li>
+        `;
+    });
+
+    if (listaModulos === "") {
+        listaModulos = "<li>Nenhum módulo cadastrado.</li>";
+    }
+
+    return listaModulos;
+}
+
+// RENDERIZAR CURSOS
+function renderizarCursos() {
+    listaCursos.innerHTML = "";
+
+    cursos.forEach(function (curso) {
+        const listaModulos = gerarModulosEAulas(curso.id);
+
         listaCursos.innerHTML += `
             <div class="col-md-4">
                 <div class="card curso-card h-100">
                     <img src="${curso.imagem}" class="card-img-top" alt="${curso.titulo}">
+
                     <div class="card-body">
                         <h5 class="card-title">${curso.titulo}</h5>
+
                         <p class="card-text">
                             <strong>Categoria:</strong> ${curso.categoria}<br>
                             <strong>Instrutor:</strong> ${curso.instrutor}<br>
@@ -210,13 +229,42 @@ function renderizarCursos() {
                             <strong>Total de horas:</strong> ${curso.horas}h
                         </p>
 
-                        <hr>
-
-                        <h6>Módulos e Aulas</h6>
-                        <ul>${listaModulos}</ul>
+                        <button class="btn btn-primary" onclick="abrirModalCurso(${curso.id})">
+                            Ver curso
+                        </button>
                     </div>
                 </div>
             </div>
         `;
     });
+}
+
+// ABRIR MODAL DO CURSO
+function abrirModalCurso(idCurso) {
+    const curso = cursos.find(function (curso) {
+        return curso.id === idCurso;
+    });
+
+    const listaModulos = gerarModulosEAulas(idCurso);
+
+    modalTituloCurso.innerText = curso.titulo;
+
+    modalConteudoCurso.innerHTML = `
+        <img src="${curso.imagem}" class="img-fluid rounded mb-3" alt="${curso.titulo}">
+
+        <p>
+            <strong>Categoria:</strong> ${curso.categoria}<br>
+            <strong>Instrutor:</strong> ${curso.instrutor}<br>
+            <strong>Nível:</strong> ${curso.nivel}<br>
+            <strong>Total de horas:</strong> ${curso.horas}h
+        </p>
+
+        <hr>
+
+        <h6>Módulos e Aulas</h6>
+        <ul>${listaModulos}</ul>
+    `;
+
+    const modal = new bootstrap.Modal(document.getElementById("modalCurso"));
+    modal.show();
 }

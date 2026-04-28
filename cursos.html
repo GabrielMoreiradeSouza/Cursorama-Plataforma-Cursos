@@ -17,6 +17,7 @@
 
 <body>
 
+    <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Cursorama</a>
@@ -37,10 +38,12 @@
         </div>
     </nav>
 
+    <!-- TÍTULO -->
     <div class="container mt-4">
         <h2>Cursos</h2>
     </div>
 
+    <!-- CURSO -->
     <div class="container mt-4">
         <h4>Cadastrar Curso</h4>
 
@@ -68,16 +71,19 @@
 
                 <div class="col-md-4">
                     <input type="text" id="imagem" class="form-control"
-                        placeholder="Imagem. Ex: ./img/react.jpg">
+                        placeholder="Imagem (ex: ./img/react.jpg)">
                 </div>
 
                 <div class="col-md-4">
-                    <button type="submit" class="btn btn-success w-100">Cadastrar Curso</button>
+                    <button type="submit" class="btn btn-success w-100">
+                        Cadastrar Curso
+                    </button>
                 </div>
             </div>
         </form>
     </div>
 
+    <!-- MÓDULO -->
     <div class="container mt-5">
         <h4>Cadastrar Módulo</h4>
 
@@ -98,12 +104,15 @@
                 </div>
 
                 <div class="col-md-4">
-                    <button type="submit" class="btn btn-warning w-100">Cadastrar Módulo</button>
+                    <button type="submit" class="btn btn-warning w-100">
+                        Cadastrar Módulo
+                    </button>
                 </div>
             </div>
         </form>
     </div>
 
+    <!-- AULA -->
     <div class="container mt-5">
         <h4>Cadastrar Aula</h4>
 
@@ -120,7 +129,8 @@
                 </div>
 
                 <div class="col-md-4">
-                    <input type="text" id="tipoAula" class="form-control" placeholder="Tipo: Vídeo, Texto ou Quiz" required>
+                    <input type="text" id="tipoAula" class="form-control"
+                        placeholder="Tipo: Vídeo, Texto ou Quiz" required>
                 </div>
 
                 <div class="col-md-4">
@@ -128,7 +138,7 @@
                 </div>
 
                 <div class="col-md-4">
-                    <input type="number" id="duracaoAula" class="form-control" placeholder="Duração em minutos" required>
+                    <input type="number" id="duracaoAula" class="form-control" placeholder="Duração (min)" required>
                 </div>
 
                 <div class="col-md-4">
@@ -136,17 +146,44 @@
                 </div>
 
                 <div class="col-md-4">
-                    <button type="submit" class="btn btn-info w-100">Cadastrar Aula</button>
+                    <button type="submit" class="btn btn-info w-100">
+                        Cadastrar Aula
+                    </button>
                 </div>
             </div>
         </form>
     </div>
 
+    <!-- LISTA -->
     <div class="container mt-5 mb-5">
         <h4>Cursos Cadastrados</h4>
         <div id="listaCursos" class="row g-4 mt-2"></div>
     </div>
 
+    <!-- MODAL -->
+    <div class="modal fade" id="modalCurso" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 id="modalTituloCurso" class="modal-title">Detalhes do Curso</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body" id="modalConteudoCurso">
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Fechar
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
     <script src="./js/popper.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>
     <script src="./js/cursos.js"></script>
