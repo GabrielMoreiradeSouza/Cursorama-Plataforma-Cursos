@@ -1,55 +1,212 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTML, CSS e JavaScript</title>
+    <title>Cursorama - Trilhas</title>
     <link rel="stylesheet" href="./css/bootstrap.min.css">
+
+    <style>
+        .badge-ordem {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background-color: #F19E39;
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+        }
+
+        .certificado-visual {
+            border: 8px double #F19E39;
+            padding: 40px;
+            text-align: center;
+            background: linear-gradient(135deg, #fff9f0, #ffffff);
+            border-radius: 12px;
+            font-family: Georgia, serif;
+        }
+
+        .cert-logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #F19E39;
+        }
+
+        .cert-nome {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+            margin: 12px 0 8px;
+        }
+
+        .cert-titulo {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #F19E39;
+        }
+
+        .cert-codigo {
+            font-size: 0.8rem;
+            color: #999;
+            font-family: monospace;
+            margin-top: 8px;
+        }
+    </style>
 </head>
 
 <body>
 
-    <nav class="navbar bg-dark navbar-expand-lg bg-body-tertiary border-bottom border-body" data-bs-theme="dark">
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <img src="./img/school_24dp_F19E39_FILL0_wght400_GRAD0_opsz24.svg" alt="Logo" width="30" height="24"
-                    class="d-inline-block align-text-top">
-                Cursorama
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <a class="navbar-brand" href="./index.html">Cursorama</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a href="./cursos.html" class="nav-link">Cursos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="./trilhas.html" class="nav-link">Trilhas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="./projetos.html" class="nav-link">Projetos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="./sobre.html" class="nav-link">Sobre</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="./contato.html" class="nav-link">Contato</a>
-                    </li>
+                    <li class="nav-item"><a href="./cursos.html" class="nav-link">Cursos</a></li>
+                    <li class="nav-item"><a href="./trilhas.html" class="nav-link active">Trilhas</a></li>
+                    <li class="nav-item"><a href="./projetos.html" class="nav-link">Projetos</a></li>
+                    <li class="nav-item"><a href="./sobre.html" class="nav-link">Sobre</a></li>
+                    <li class="nav-item"><a href="./contato.html" class="nav-link">Contato</a></li>
                 </ul>
             </div>
         </div>
-
     </nav>
 
-    <div class="container">
-        <h2>Trilhas Disponíveis</h2>
+    <!-- TÍTULO -->
+    <div class="container mt-4">
+        <h2>Trilhas de Conhecimento</h2>
     </div>
 
+    <!-- CADASTRAR TRILHA -->
+    <div class="container mt-4">
+        <h4>Cadastrar Trilha</h4>
+
+        <form id="formTrilha">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <input type="text" id="tituloTrilha" class="form-control" placeholder="Título da Trilha" required>
+                </div>
+
+                <div class="col-md-4">
+                    <input type="text" id="descricaoTrilha" class="form-control" placeholder="Descrição" required>
+                </div>
+
+                <div class="col-md-4">
+                    <select id="selectCategoria" class="form-control" required>
+                        <option value="">Selecione a Categoria</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-success w-100">
+                        Cadastrar Trilha
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- ASSOCIAR CURSO -->
+    <div class="container mt-5">
+        <h4>Associar Curso à Trilha</h4>
+
+        <form id="formTrilhaCurso">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <select id="selectTrilhaAssoc" class="form-control" required>
+                        <option value="">Selecione a Trilha</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <select id="selectCursoAssoc" class="form-control" required>
+                        <option value="">Selecione o Curso</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <input type="number" id="ordemCurso" class="form-control" placeholder="Ordem" min="1" required>
+                </div>
+
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-warning w-100">
+                        Associar Curso
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- TRILHAS CADASTRADAS -->
+    <div class="container mt-5">
+        <h4>Trilhas Disponíveis</h4>
+        <div id="listaTrilhas" class="row g-4 mt-2"></div>
+    </div>
+
+    <!-- CERTIFICADOS -->
+    <div class="container mt-5 mb-5">
+        <h4>Gerar Certificado</h4>
+
+        <div class="row g-4">
+            <div class="col-md-5">
+                <form id="formCertificado">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <input type="text" id="nomeAluno" class="form-control"
+                                placeholder="Nome completo do aluno" required>
+                        </div>
+
+                        <div class="col-12">
+                            <select id="selectTipoCert" class="form-control">
+                                <option value="trilha">Trilha</option>
+                                <option value="curso">Curso</option>
+                            </select>
+                        </div>
+
+                        <div class="col-12" id="grupoCertTrilha">
+                            <select id="selectTrilhaCert" class="form-control">
+                                <option value="">Selecione a Trilha</option>
+                            </select>
+                        </div>
+
+                        <div class="col-12 d-none" id="grupoCertCurso">
+                            <select id="selectCursoCert" class="form-control">
+                                <option value="">Selecione o Curso</option>
+                            </select>
+                        </div>
+
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-info w-100">
+                                Gerar Certificado
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <div id="listaCertificados"></div>
+            </div>
+
+            <div class="col-md-7">
+                <div id="certificadoVisual" class="d-none"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
     <script src="./js/popper.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>
-</body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="./js/trilhas.js"></script>
 
+</body>
 </html>
