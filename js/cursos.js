@@ -1,11 +1,12 @@
 class Curso {
-    constructor(id, titulo, categoria, instrutor, nivel, horas) {
+    constructor(id, titulo, categoria, instrutor, nivel, horas, imagem) {
         this.id = id;
         this.titulo = titulo;
         this.categoria = categoria;
         this.instrutor = instrutor;
         this.nivel = nivel;
         this.horas = horas;
+        this.imagem = imagem;
     }
 }
 
@@ -42,6 +43,7 @@ const listaCursos = document.getElementById("listaCursos");
 const cursoSelect = document.getElementById("cursoSelect");
 const moduloSelect = document.getElementById("moduloSelect");
 
+// ================== CURSO ==================
 formCurso.addEventListener("submit", function (event) {
     event.preventDefault();
 
@@ -51,13 +53,17 @@ formCurso.addEventListener("submit", function (event) {
     const nivel = document.getElementById("nivel").value;
     const horas = document.getElementById("horas").value;
 
+    // 🔥 NOVO
+    const imagem = document.getElementById("imagem").value || "./img/react.jpg";
+
     const novoCurso = new Curso(
         cursos.length + 1,
         titulo,
         categoria,
         instrutor,
         nivel,
-        horas
+        horas,
+        imagem
     );
 
     cursos.push(novoCurso);
@@ -68,6 +74,7 @@ formCurso.addEventListener("submit", function (event) {
     formCurso.reset();
 });
 
+// ================== MÓDULO ==================
 formModulo.addEventListener("submit", function (event) {
     event.preventDefault();
 
@@ -90,6 +97,7 @@ formModulo.addEventListener("submit", function (event) {
     formModulo.reset();
 });
 
+// ================== AULA ==================
 formAula.addEventListener("submit", function (event) {
     event.preventDefault();
 
@@ -117,6 +125,7 @@ formAula.addEventListener("submit", function (event) {
     formAula.reset();
 });
 
+// ================== SELECTS ==================
 function atualizarSelectCursos() {
     cursoSelect.innerHTML = '<option value="">Selecione o Curso</option>';
 
@@ -133,9 +142,7 @@ function atualizarSelectModulos() {
     moduloSelect.innerHTML = '<option value="">Selecione o Módulo</option>';
 
     modulos.forEach(function (modulo) {
-        const curso = cursos.find(function (curso) {
-            return curso.id === modulo.cursoId;
-        });
+        const curso = cursos.find(c => c.id === modulo.cursoId);
 
         moduloSelect.innerHTML += `
             <option value="${modulo.id}">
@@ -145,28 +152,21 @@ function atualizarSelectModulos() {
     });
 }
 
+// ================== RENDER ==================
 function renderizarCursos() {
     listaCursos.innerHTML = "";
 
     cursos.forEach(function (curso) {
         const modulosDoCurso = modulos
-            .filter(function (modulo) {
-                return modulo.cursoId === curso.id;
-            })
-            .sort(function (a, b) {
-                return a.ordem - b.ordem;
-            });
+            .filter(m => m.cursoId === curso.id)
+            .sort((a, b) => a.ordem - b.ordem);
 
         let listaModulos = "";
 
         modulosDoCurso.forEach(function (modulo) {
             const aulasDoModulo = aulas
-                .filter(function (aula) {
-                    return aula.moduloId === modulo.id;
-                })
-                .sort(function (a, b) {
-                    return a.ordem - b.ordem;
-                });
+                .filter(a => a.moduloId === modulo.id)
+                .sort((a, b) => a.ordem - b.ordem);
 
             let listaAulas = "";
 
@@ -180,27 +180,27 @@ function renderizarCursos() {
                 `;
             });
 
-            if (listaAulas === "") {
+            if (!listaAulas) {
                 listaAulas = "<li>Nenhuma aula cadastrada.</li>";
             }
 
             listaModulos += `
                 <li>
                     <strong>Módulo ${modulo.ordem}:</strong> ${modulo.titulo}
-                    <ul>
-                        ${listaAulas}
-                    </ul>
+                    <ul>${listaAulas}</ul>
                 </li>
             `;
         });
 
-        if (listaModulos === "") {
+        if (!listaModulos) {
             listaModulos = "<li>Nenhum módulo cadastrado.</li>";
         }
 
+        // 🔥 CARD COM IMAGEM
         listaCursos.innerHTML += `
             <div class="col-md-4">
                 <div class="card curso-card h-100">
+                    <img src="${curso.imagem}" class="card-img-top" alt="${curso.titulo}">
                     <div class="card-body">
                         <h5 class="card-title">${curso.titulo}</h5>
                         <p class="card-text">
@@ -213,9 +213,7 @@ function renderizarCursos() {
                         <hr>
 
                         <h6>Módulos e Aulas</h6>
-                        <ul>
-                            ${listaModulos}
-                        </ul>
+                        <ul>${listaModulos}</ul>
                     </div>
                 </div>
             </div>

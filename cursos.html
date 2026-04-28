@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cursorama</title>
     <link rel="stylesheet" href="./css/bootstrap.min.css">
+
     <style>
         .curso-card .card-img-top {
             height: 220px;
@@ -16,13 +17,9 @@
 
 <body>
 
-    <nav class="navbar bg-dark navbar-expand-lg bg-body-tertiary border-bottom border-body" data-bs-theme="dark">
+    <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <img src="./img/school_24dp_F19E39_FILL0_wght400_GRAD0_opsz24.svg" alt="Logo" width="30" height="24"
-                    class="d-inline-block align-text-top">
-                Cursorama
-            </a>
+            <a class="navbar-brand" href="#">Cursorama</a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -40,12 +37,10 @@
         </div>
     </nav>
 
-    <!-- CURSOS -->
     <div class="container mt-4">
         <h2>Cursos</h2>
     </div>
 
-    <!-- FORM CURSO -->
     <div class="container mt-4">
         <h4>Cadastrar Curso</h4>
 
@@ -64,12 +59,16 @@
                 </div>
 
                 <div class="col-md-4">
-                    <input type="text" id="nivel" class="form-control"
-                        placeholder="Nível (Iniciante, Intermediário...)" required>
+                    <input type="text" id="nivel" class="form-control" placeholder="Nível" required>
                 </div>
 
                 <div class="col-md-4">
                     <input type="number" id="horas" class="form-control" placeholder="Total de Horas" required>
+                </div>
+
+                <div class="col-md-4">
+                    <input type="text" id="imagem" class="form-control"
+                        placeholder="Imagem. Ex: ./img/react.jpg">
                 </div>
 
                 <div class="col-md-4">
@@ -79,7 +78,6 @@
         </form>
     </div>
 
-    <!-- FORM MÓDULO -->
     <div class="container mt-5">
         <h4>Cadastrar Módulo</h4>
 
@@ -106,7 +104,6 @@
         </form>
     </div>
 
-    <!-- FORM AULA -->
     <div class="container mt-5">
         <h4>Cadastrar Aula</h4>
 
@@ -123,7 +120,7 @@
                 </div>
 
                 <div class="col-md-4">
-                    <input type="text" id="tipoAula" class="form-control" placeholder="Tipo (Vídeo, Texto, Quiz)" required>
+                    <input type="text" id="tipoAula" class="form-control" placeholder="Tipo: Vídeo, Texto ou Quiz" required>
                 </div>
 
                 <div class="col-md-4">
@@ -145,40 +142,9 @@
         </form>
     </div>
 
-    <!-- LISTA -->
-    <div class="container mt-5">
+    <div class="container mt-5 mb-5">
         <h4>Cursos Cadastrados</h4>
         <div id="listaCursos" class="row g-4 mt-2"></div>
-    </div>
-
-    <hr>
-
-    <!-- CURSOS FIXOS -->
-    <div class="container mt-4 mb-5">
-        <h4>Cursos Disponíveis</h4>
-
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="card curso-card h-100">
-                    <img src="./img/bigdata.jpg" class="card-img-top" alt="Curso Big Data">
-                    <div class="card-body">
-                        <h5 class="card-title">Curso Big Data</h5>
-                        <p class="card-text">Curso introdutório de Big Data.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card curso-card h-100">
-                    <img src="./img/react.jpg" class="card-img-top" alt="Curso React">
-                    <div class="card-body">
-                        <h5 class="card-title">Curso React</h5>
-                        <p class="card-text">Aprenda React do zero.</p>
-                        <a href="./Cursos/react.html" class="btn btn-primary">Ver curso</a>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
     <script src="./js/popper.min.js"></script>
