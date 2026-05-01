@@ -1,0 +1,678 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cursorama - Categorias</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --brand: #f19e39;
+        --brand-dark: #c97d1e;
+        --bg: #0d0f14;
+        --bg-card: #151820;
+        --bg-input: #1c2030;
+        --border: #262c3e;
+        --text: #e8eaf0;
+        --text-muted: #6b7490;
+        --success: #3ecf8e;
+        --danger: #ff5c5c;
+        --warning: #f0b429;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "DM Sans", sans-serif;
+        min-height: 100vh;
+      }
+
+      /* NAVBAR */
+      .navbar {
+        background: rgba(13, 15, 20, 0.95) !important;
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border) !important;
+        padding: 14px 0;
+      }
+      .navbar-brand {
+        font-family: "Syne", sans-serif;
+        font-weight: 800;
+        font-size: 1.3rem;
+        color: var(--brand) !important;
+        letter-spacing: -0.5px;
+      }
+      .nav-link {
+        color: var(--text-muted) !important;
+        font-size: 0.875rem;
+        font-weight: 500;
+        transition: color 0.2s;
+        padding: 6px 14px !important;
+        border-radius: 6px;
+      }
+      .nav-link:hover {
+        color: var(--text) !important;
+      }
+      .nav-link.active {
+        color: var(--brand) !important;
+        background: rgba(241, 158, 57, 0.1);
+      }
+
+      /* HERO */
+      .page-header {
+        padding: 56px 0 40px;
+        position: relative;
+      }
+      .page-header::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 600px;
+        height: 200px;
+        background: radial-gradient(
+          ellipse,
+          rgba(241, 158, 57, 0.1) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+      .page-title {
+        font-family: "Syne", sans-serif;
+        font-weight: 800;
+        font-size: 2.2rem;
+        letter-spacing: -1px;
+        margin-bottom: 4px;
+      }
+      .page-title span {
+        color: var(--brand);
+      }
+      .page-subtitle {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+      }
+
+      /* CARD */
+      .glass-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        overflow: hidden;
+        transition: border-color 0.2s;
+        animation: fadeInUp 0.4s ease both;
+      }
+      .glass-card:hover {
+        border-color: rgba(241, 158, 57, 0.25);
+      }
+
+      .card-head {
+        padding: 18px 24px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .card-head-title {
+        font-family: "Syne", sans-serif;
+        font-weight: 700;
+        font-size: 1rem;
+        margin: 0;
+      }
+      .card-body-inner {
+        padding: 24px;
+      }
+
+      /* FORM */
+      .form-label {
+        font-size: 0.78rem;
+        font-weight: 500;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 6px;
+      }
+      .form-control,
+      textarea.form-control {
+        background: var(--bg-input) !important;
+        border: 1px solid var(--border) !important;
+        border-radius: 10px !important;
+        color: var(--text) !important;
+        padding: 10px 14px;
+        font-size: 0.9rem;
+        font-family: "DM Sans", sans-serif;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+        resize: none;
+      }
+      .form-control::placeholder {
+        color: var(--text-muted) !important;
+      }
+      .form-control:focus {
+        border-color: var(--brand) !important;
+        box-shadow: 0 0 0 3px rgba(241, 158, 57, 0.15) !important;
+      }
+      .form-control.is-invalid {
+        border-color: var(--danger) !important;
+      }
+      .invalid-feedback {
+        color: var(--danger);
+        font-size: 0.78rem;
+      }
+
+      /* BUTTONS */
+      .btn-brand {
+        background: var(--brand);
+        color: #0d0f14;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 20px;
+        font-family: "Syne", sans-serif;
+        font-weight: 700;
+        font-size: 0.875rem;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          transform 0.1s;
+        width: 100%;
+      }
+      .btn-brand:hover {
+        background: var(--brand-dark);
+        transform: translateY(-1px);
+      }
+
+      .btn-edit-mode {
+        background: rgba(240, 180, 41, 0.15);
+        color: var(--warning);
+        border: 1px solid rgba(240, 180, 41, 0.3);
+        border-radius: 10px;
+        padding: 10px 20px;
+        font-family: "Syne", sans-serif;
+        font-weight: 700;
+        font-size: 0.875rem;
+        cursor: pointer;
+        width: 100%;
+        transition: all 0.2s;
+      }
+      .btn-edit-mode:hover {
+        background: rgba(240, 180, 41, 0.25);
+      }
+
+      .btn-ghost {
+        background: transparent;
+        color: var(--text-muted);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 10px 20px;
+        font-size: 0.875rem;
+        cursor: pointer;
+        width: 100%;
+        transition: all 0.2s;
+      }
+      .btn-ghost:hover {
+        border-color: var(--text-muted);
+        color: var(--text);
+      }
+
+      .btn-sm-edit {
+        background: transparent;
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        padding: 3px 10px;
+        font-size: 0.76rem;
+        color: var(--warning);
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .btn-sm-edit:hover {
+        background: rgba(240, 180, 41, 0.1);
+        border-color: var(--warning);
+      }
+
+      .btn-sm-del {
+        background: transparent;
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        padding: 3px 10px;
+        font-size: 0.76rem;
+        color: var(--danger);
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .btn-sm-del:hover {
+        background: rgba(255, 92, 92, 0.1);
+        border-color: var(--danger);
+      }
+
+      .btn-sm-view {
+        background: transparent;
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        padding: 3px 10px;
+        font-size: 0.76rem;
+        color: var(--text-muted);
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .btn-sm-view:hover {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: var(--text-muted);
+        color: var(--text);
+      }
+
+      /* TABLE */
+      .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .custom-table thead th {
+        padding: 12px 20px;
+        font-size: 0.72rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: var(--text-muted);
+        border-bottom: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.02);
+      }
+      .custom-table tbody tr {
+        border-bottom: 1px solid rgba(38, 44, 62, 0.6);
+        transition: background 0.15s;
+      }
+      .custom-table tbody tr:hover {
+        background: rgba(241, 158, 57, 0.04);
+      }
+      .custom-table tbody tr:last-child {
+        border-bottom: none;
+      }
+      .custom-table tbody td {
+        padding: 14px 20px;
+        font-size: 0.875rem;
+        vertical-align: middle;
+      }
+
+      /* CATEGORY PILL */
+      .cat-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 600;
+      }
+      .cat-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--brand);
+        flex-shrink: 0;
+      }
+
+      /* BADGE */
+      .badge-count {
+        background: rgba(241, 158, 57, 0.12);
+        color: var(--brand);
+        border: 1px solid rgba(241, 158, 57, 0.25);
+        border-radius: 20px;
+        padding: 3px 12px;
+        font-size: 0.78rem;
+        font-weight: 600;
+      }
+
+      /* CURSOS PANEL */
+      .cursos-panel {
+        background: rgba(241, 158, 57, 0.04);
+        border: 1px solid rgba(241, 158, 57, 0.2);
+        border-radius: 12px;
+        padding: 16px 20px;
+        margin-top: 16px;
+        display: none;
+      }
+      .cursos-panel.show {
+        display: block;
+        animation: fadeInUp 0.25s ease;
+      }
+      .cursos-panel-title {
+        font-family: "Syne", sans-serif;
+        font-weight: 700;
+        font-size: 0.875rem;
+        color: var(--brand);
+        margin-bottom: 10px;
+      }
+
+      /* EMPTY */
+      .empty-state {
+        padding: 48px 24px;
+        text-align: center;
+        color: var(--text-muted);
+      }
+      .empty-state .icon {
+        font-size: 2.4rem;
+        margin-bottom: 10px;
+        opacity: 0.35;
+      }
+      .empty-state p {
+        margin: 0;
+        font-size: 0.88rem;
+      }
+
+      /* TOAST */
+      .toast-alert {
+        position: fixed;
+        bottom: 28px;
+        right: 28px;
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 14px 20px;
+        font-size: 0.875rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+        transform: translateY(80px);
+        opacity: 0;
+        transition:
+          transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+          opacity 0.3s;
+        z-index: 9999;
+        min-width: 240px;
+      }
+      .toast-alert.show {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      .toast-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .toast-alert.success .toast-dot {
+        background: var(--success);
+      }
+      .toast-alert.warning .toast-dot {
+        background: var(--warning);
+      }
+      .toast-alert.danger .toast-dot {
+        background: var(--danger);
+      }
+
+      /* MODAL */
+      .modal-content {
+        background: var(--bg-card) !important;
+        border: 1px solid var(--border) !important;
+        border-radius: 16px !important;
+        color: var(--text) !important;
+      }
+      .modal-header {
+        border-bottom: 1px solid var(--border) !important;
+        padding: 20px 24px !important;
+      }
+      .modal-footer {
+        border-top: 1px solid var(--border) !important;
+        padding: 16px 24px !important;
+      }
+      .modal-title {
+        font-family: "Syne", sans-serif;
+        font-weight: 700;
+      }
+      .btn-close {
+        filter: invert(1) !important;
+      }
+
+      /* EDIT MODE GLOW */
+      .glass-card.editing {
+        border-color: rgba(240, 180, 41, 0.5);
+        box-shadow: 0 0 0 1px rgba(240, 180, 41, 0.15);
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(18px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <a class="navbar-brand" href="./index.html">
+          <img
+            src="./img/school_24dp_F19E39_FILL0_wght400_GRAD0_opsz24.svg"
+            alt="Logo"
+            width="22"
+            height="22"
+            class="d-inline-block align-text-top me-2"
+          />
+          Cursorama
+        </a>
+        <button
+          class="navbar-toggler border-0"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto gap-1">
+            <li class="nav-item">
+              <a href="./cursos.html" class="nav-link">Cursos</a>
+            </li>
+            <li class="nav-item">
+              <a href="./trilhas.html" class="nav-link">Trilhas</a>
+            </li>
+            <li class="nav-item">
+              <a href="./categorias.html" class="nav-link active">Categorias</a>
+            </li>
+            <li class="nav-item">
+              <a href="./usuarios.html" class="nav-link">Usuários</a>
+            </li>
+            <li class="nav-item">
+              <a href="./projetos.html" class="nav-link">Projetos</a>
+            </li>
+            <li class="nav-item">
+              <a href="./sobre.html" class="nav-link">Sobre</a>
+            </li>
+            <li class="nav-item">
+              <a href="./contato.html" class="nav-link">Contato</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="page-header">
+        <h1 class="page-title">Gerenciar <span>Categorias</span></h1>
+        <p class="page-subtitle">
+          Organize os cursos da plataforma por categoria
+        </p>
+      </div>
+
+      <div class="row g-4 mb-5">
+        <!-- Form col -->
+        <div class="col-md-4">
+          <div class="glass-card" id="cardForm">
+            <div class="card-head">
+              <h5 class="card-head-title" id="tituloFormCategoria">
+                Nova Categoria
+              </h5>
+            </div>
+            <div class="card-body-inner">
+              <form id="formCategoria" novalidate>
+                <input type="hidden" id="idEdicao" value="" />
+
+                <div class="mb-3">
+                  <label for="nomeCategoria" class="form-label">Nome *</label>
+                  <input
+                    type="text"
+                    id="nomeCategoria"
+                    class="form-control"
+                    placeholder="Ex: Programação"
+                    required
+                  />
+                  <div class="invalid-feedback">
+                    Nome da categoria é obrigatório.
+                  </div>
+                </div>
+
+                <div class="mb-4">
+                  <label for="descricaoCategoria" class="form-label"
+                    >Descrição</label
+                  >
+                  <textarea
+                    id="descricaoCategoria"
+                    class="form-control"
+                    rows="3"
+                    placeholder="Descreva a categoria..."
+                  ></textarea>
+                </div>
+
+                <div class="d-flex flex-column gap-2">
+                  <button
+                    type="submit"
+                    class="btn-brand"
+                    id="btnSalvarCategoria"
+                  >
+                    Cadastrar Categoria
+                  </button>
+                  <button
+                    type="button"
+                    class="btn-ghost"
+                    id="btnCancelarEdicao"
+                    style="display: none"
+                  >
+                    Cancelar edição
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Table col -->
+        <div class="col-md-8">
+          <div class="glass-card">
+            <div class="card-head">
+              <h5 class="card-head-title">Categorias Cadastradas</h5>
+              <span class="badge-count" id="contadorCategorias"
+                >0 categorias</span
+              >
+            </div>
+            <div class="table-responsive">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="tabelaCategorias">
+                  <tr>
+                    <td colspan="4">
+                      <div class="empty-state">
+                        <div class="icon">🗂️</div>
+                        <p>Nenhuma categoria cadastrada ainda.</p>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Cursos por categoria -->
+          <div class="cursos-panel" id="cursosPainel">
+            <div class="cursos-panel-title">
+              Cursos em: <span id="nomeCategoriaSelecionada"></span>
+            </div>
+            <div id="listaCursosDaCategoria">
+              <span style="color: var(--text-muted); font-size: 0.875rem"
+                >Nenhum curso nesta categoria ainda.</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast-alert" id="toastAlert">
+      <div class="toast-dot"></div>
+      <span id="toastMsg"></span>
+    </div>
+
+    <!-- Modal exclusão -->
+    <div class="modal fade" id="modalExcluirCategoria" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Confirmar Exclusão</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div
+            class="modal-body px-4 pb-2"
+            style="color: var(--text-muted); font-size: 0.9rem"
+          >
+            Tem certeza que deseja excluir a categoria
+            <strong
+              style="color: var(--text)"
+              id="nomeExcluirCategoria"
+            ></strong
+            >? <br /><small>Esta ação não pode ser desfeita.</small>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn-ghost"
+              style="width: auto"
+              data-bs-dismiss="modal"
+            >
+              Cancelar
+            </button>
+            <button
+              type="button"
+              id="btnConfirmarExclusaoCategoria"
+              style="
+                background: var(--danger);
+                color: #fff;
+                border: none;
+                border-radius: 10px;
+                padding: 10px 22px;
+                font-family: &quot;Syne&quot;, sans-serif;
+                font-weight: 700;
+                font-size: 0.875rem;
+                cursor: pointer;
+              "
+            >
+              Excluir
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="./js/bootstrap.bundle.min.js"></script>
+    <script src="./js/categorias.js"></script>
+  </body>
+</html>
