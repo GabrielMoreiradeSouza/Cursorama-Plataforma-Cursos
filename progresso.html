@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursorama - Progresso</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+</head>
+
+<body>
+
+    <nav class="navbar bg-dark navbar-expand-lg bg-body-tertiary border-bottom border-body" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="./index.html">
+                <img src="./img/school_24dp_F19E39_FILL0_wght400_GRAD0_opsz24.svg" alt="Logo" width="30" height="24"
+                    class="d-inline-block align-text-top">
+                Cursorama
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a href="./usuarios.html" class="nav-link">Usuários</a></li>
+                    <li class="nav-item"><a href="./cursos.html" class="nav-link">Cursos</a></li>
+                    <li class="nav-item"><a href="./trilhas.html" class="nav-link">Trilhas</a></li>
+                    <li class="nav-item"><a href="./progresso.html" class="nav-link active">Progresso</a></li>
+                    <li class="nav-item"><a href="./financeiro.html" class="nav-link">Financeiro</a></li>
+                    <li class="nav-item"><a href="./sobre.html" class="nav-link">Sobre</a></li>
+                    <li class="nav-item"><a href="./contato.html" class="nav-link">Contato</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h2>Progresso e Avaliações</h2>
+        <h4 id="nomeAlunoLogado" class="text-primary">Carregando...</h4>
+        <hr>
+    </div>
+
+    <!-- Progresso do Aluno -->
+    <div class="container mt-4" id="areaProgresso">
+        <div class="row g-4">
+            
+            <div class="col-md-6">
+                <div class="card shadow-sm h-100 border-info">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0">Meus Cursos e Aulas</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted small">Marque as aulas que você já concluiu.</p>
+                        <div id="listaAulasPendentes"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card shadow-sm h-100 border-warning">
+                    <div class="card-header bg-warning text-dark">
+                        <h5 class="mb-0">Avaliar Curso</h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="formAvaliacao">
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <select id="cursoAvaliacaoSelect" class="form-select" required>
+                                        <option value="">Selecione o Curso Matriculado</option>
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Nota (1 a 5):</label>
+                                    <input type="number" id="nota" class="form-control" min="1" max="5" required>
+                                </div>
+                                <div class="col-12">
+                                    <textarea id="comentario" class="form-control" placeholder="Deixe um comentário (opcional)" rows="3"></textarea>
+                                </div>
+                                <div class="col-12 text-end">
+                                    <button type="submit" class="btn btn-warning">Enviar Avaliação</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5 mb-5 d-none" id="areaAvaliacoesFeitas">
+            <div class="col-12">
+                <h4 class="text-secondary">Minhas Avaliações</h4>
+                <div id="listaMinhasAvaliacoes" class="row g-3 mt-2"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="./js/popper.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/db.js"></script>
+    <script src="./js/progresso.js"></script>
+</body>
+
+</html>

@@ -1,14 +1,10 @@
 <!DOCTYPE html>
-<<<<<<< HEAD
 <html lang="pt-BR">
-=======
-<html lang="en">
->>>>>>> 4e88d5d7eee9bf7dd5a57d7626dd68ee0f109c89
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cursorama</title>
+    <title>Cursorama - Cursos</title>
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <style>
         .curso-card .card-img-top {
@@ -22,21 +18,22 @@
 
     <nav class="navbar bg-dark navbar-expand-lg bg-body-tertiary border-bottom border-body" data-bs-theme="dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="./index.html">
                 <img src="./img/school_24dp_F19E39_FILL0_wght400_GRAD0_opsz24.svg" alt="Logo" width="30" height="24"
                     class="d-inline-block align-text-top">
                 Cursorama
             </a>
-<<<<<<< HEAD
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item"><a href="./cursos.html" class="nav-link">Cursos</a></li>
+                    <li class="nav-item"><a href="./usuarios.html" class="nav-link">Usuários</a></li>
+                    <li class="nav-item"><a href="./cursos.html" class="nav-link active">Cursos</a></li>
                     <li class="nav-item"><a href="./trilhas.html" class="nav-link">Trilhas</a></li>
-                    <li class="nav-item"><a href="./projetos.html" class="nav-link">Projetos</a></li>
+                    <li class="nav-item"><a href="./progresso.html" class="nav-link">Progresso</a></li>
+                    <li class="nav-item"><a href="./financeiro.html" class="nav-link">Financeiro</a></li>
                     <li class="nav-item"><a href="./sobre.html" class="nav-link">Sobre</a></li>
                     <li class="nav-item"><a href="./contato.html" class="nav-link">Contato</a></li>
                 </ul>
@@ -45,214 +42,137 @@
     </nav>
 
     <div class="container mt-4">
-        <h2>Cursos</h2>
+        <h2>Gestão de Cursos e Módulos</h2>
+        <hr>
     </div>
 
     <div class="container mt-4">
-        <h4>Cadastrar Curso</h4>
-
-        <form id="formCurso">
-            <div class="row g-3">
-                <div class="col-md-4">
-                    <input type="text" id="titulo" class="form-control" placeholder="Título do Curso" required>
-                </div>
-
-                <div class="col-md-4">
-                    <input type="text" id="categoria" class="form-control" placeholder="Categoria" required>
-                </div>
-
-                <div class="col-md-4">
-                    <input type="text" id="instrutor" class="form-control" placeholder="Instrutor" required>
-                </div>
-
-                <div class="col-md-4">
-                    <input type="text" id="nivel" class="form-control"
-                        placeholder="Nível (Iniciante, Intermediário...)" required>
-                </div>
-
-                <div class="col-md-4">
-                    <input type="number" id="horas" class="form-control" placeholder="Total de Horas" required>
-                </div>
-
-                <div class="col-md-4">
-                    <button type="submit" class="btn btn-success w-100">Cadastrar Curso</button>
-                </div>
-            </div>
-        </form>
-    </div>
-
-    <div class="container mt-5">
-        <h4>Cadastrar Módulo</h4>
-
-        <form id="formModulo">
-            <div class="row g-3">
-                <div class="col-md-4">
-                    <select id="cursoSelect" class="form-control" required>
-                        <option value="">Selecione o Curso</option>
-                    </select>
-                </div>
-
-                <div class="col-md-4">
-                    <input type="text" id="tituloModulo" class="form-control" placeholder="Título do Módulo" required>
-                </div>
-
-                <div class="col-md-4">
-                    <input type="number" id="ordemModulo" class="form-control" placeholder="Ordem" required>
-                </div>
-
-                <div class="col-md-4">
-                    <button type="submit" class="btn btn-warning w-100">Cadastrar Módulo</button>
+        <div class="row g-4">
+            <div class="col-lg-12">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0">Cadastrar Curso</h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="formCurso">
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <input type="text" id="titulo" class="form-control" placeholder="Título do Curso" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <select id="categoriaSelect" class="form-control" required>
+                                        <option value="">Selecione a Categoria</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" id="instrutor" class="form-control" placeholder="ID Instrutor (Usuário)" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" id="nivel" class="form-control" placeholder="Nível (Iniciante, Intermediário...)" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="number" id="horas" class="form-control" placeholder="Total de Horas" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="number" id="totalAulas" class="form-control" placeholder="Total de Aulas Estimado" required>
+                                </div>
+                                <div class="col-md-12">
+                                    <textarea id="descricaoCurso" class="form-control" placeholder="Descrição do curso" rows="2"></textarea>
+                                </div>
+                                <div class="col-md-12 text-end">
+                                    <button type="submit" class="btn btn-success">Cadastrar Curso</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
 
-    <div class="container mt-5">
-        <h4>Cadastrar Aula</h4>
-
-        <form id="formAula">
-            <div class="row g-3">
-                <div class="col-md-4">
-                    <select id="moduloSelect" class="form-control" required>
-                        <option value="">Selecione o Módulo</option>
-                    </select>
-                </div>
-
-                <div class="col-md-4">
-                    <input type="text" id="tituloAula" class="form-control" placeholder="Título da Aula" required>
-                </div>
-
-                <div class="col-md-4">
-                    <input type="text" id="tipoAula" class="form-control" placeholder="Tipo (Vídeo, Texto, Quiz)" required>
-                </div>
-
-                <div class="col-md-4">
-                    <input type="text" id="urlAula" class="form-control" placeholder="URL do Conteúdo">
-                </div>
-
-                <div class="col-md-4">
-                    <input type="number" id="duracaoAula" class="form-control" placeholder="Duração em minutos" required>
-                </div>
-
-                <div class="col-md-4">
-                    <input type="number" id="ordemAula" class="form-control" placeholder="Ordem" required>
-                </div>
-
-                <div class="col-md-4">
-                    <button type="submit" class="btn btn-info w-100">Cadastrar Aula</button>
+    <div class="container mt-4">
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="card shadow-sm h-100">
+                    <div class="card-header bg-warning text-dark">
+                        <h5 class="mb-0">Cadastrar Módulo</h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="formModulo">
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <select id="cursoSelect" class="form-control" required>
+                                        <option value="">Selecione o Curso</option>
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <input type="text" id="tituloModulo" class="form-control" placeholder="Título do Módulo" required>
+                                </div>
+                                <div class="col-12">
+                                    <input type="number" id="ordemModulo" class="form-control" placeholder="Ordem (Ex: 1, 2)" required>
+                                </div>
+                                <div class="col-12 text-end">
+                                    <button type="submit" class="btn btn-warning">Cadastrar Módulo</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </form>
+            
+            <div class="col-md-6">
+                <div class="card shadow-sm h-100">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0">Cadastrar Aula</h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="formAula">
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <select id="moduloSelect" class="form-control" required>
+                                        <option value="">Selecione o Módulo</option>
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <input type="text" id="tituloAula" class="form-control" placeholder="Título da Aula" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <select id="tipoAula" class="form-control" required>
+                                        <option value="">Tipo de Conteúdo</option>
+                                        <option value="Vídeo">Vídeo</option>
+                                        <option value="Texto">Texto</option>
+                                        <option value="Quiz">Quiz</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="number" id="duracaoAula" class="form-control" placeholder="Duração (min)" required>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="text" id="urlAula" class="form-control" placeholder="URL do Conteúdo">
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="number" id="ordemAula" class="form-control" placeholder="Ordem" required>
+                                </div>
+                                <div class="col-12 text-end">
+                                    <button type="submit" class="btn btn-info text-white">Cadastrar Aula</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="container mt-5">
+    <div class="container mt-5 mb-5">
         <h4>Cursos Cadastrados</h4>
         <div id="listaCursos" class="row g-4 mt-2"></div>
     </div>
 
-    <hr>
-
-    <div class="container mt-4 mb-5">
-        <h4>Cursos Disponíveis</h4>
-
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="card curso-card h-100">
-                    <img src="./img/bigdata.jpg" class="card-img-top" alt="Curso Big Data">
-                    <div class="card-body">
-                        <h5 class="card-title">Curso Big Data</h5>
-                        <p class="card-text">Curso introdutório de Big Data.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card curso-card h-100">
-                    <img src="./img/react.jpg" class="card-img-top" alt="Curso React">
-                    <div class="card-body">
-                        <h5 class="card-title">Curso React</h5>
-                        <p class="card-text">Aprenda React do zero.</p>
-                        <a href="./Cursos/react.html" class="btn btn-primary">Ver curso</a>
-=======
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a href="./cursos.html" class="nav-link">Cursos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="./trilhas.html" class="nav-link">Trilhas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="./projetos.html" class="nav-link">Projetos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="./sobre.html" class="nav-link">Sobre</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="./contato.html" class="nav-link">Contato</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-    </nav>
-
-    <div class="container">
-        <h2>Cursos Disponíveis</h2>
-    </div>
-    <hr>
-
-    <div class="container">
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="card curso-card h-100">
-                    <img src="./img/bigdata.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Curso Big Data</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card’s content.</p>
-                        <a href="#" class="btn btn-primary">Inscreva-se</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card curso-card h-100">
-                    <img src="./img/react.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Curso React</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card’s content.</p>
-                        <a href="./Cursos/react.html" class="btn btn-primary">Inscreva-se</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card curso-card h-100">
-                    <img src="./img/typescript.jpeg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Curso Typescript</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card’s content.</p>
-                        <a href="#" class="btn btn-primary">Inscreva-se</a>
->>>>>>> 4e88d5d7eee9bf7dd5a57d7626dd68ee0f109c89
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script src="./js/popper.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>
-<<<<<<< HEAD
+    <script src="./js/db.js"></script>
     <script src="./js/cursos.js"></script>
-
-</body>
-=======
 </body>
 
->>>>>>> 4e88d5d7eee9bf7dd5a57d7626dd68ee0f109c89
 </html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursorama - Financeiro</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+</head>
+
+<body>
+
+    <nav class="navbar bg-dark navbar-expand-lg bg-body-tertiary border-bottom border-body" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="./index.html">
+                <img src="./img/school_24dp_F19E39_FILL0_wght400_GRAD0_opsz24.svg" alt="Logo" width="30" height="24"
+                    class="d-inline-block align-text-top">
+                Cursorama
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a href="./usuarios.html" class="nav-link">Usuários</a></li>
+                    <li class="nav-item"><a href="./cursos.html" class="nav-link">Cursos</a></li>
+                    <li class="nav-item"><a href="./trilhas.html" class="nav-link">Trilhas</a></li>
+                    <li class="nav-item"><a href="./progresso.html" class="nav-link">Progresso</a></li>
+                    <li class="nav-item"><a href="./financeiro.html" class="nav-link active">Financeiro</a></li>
+                    <li class="nav-item"><a href="./sobre.html" class="nav-link">Sobre</a></li>
+                    <li class="nav-item"><a href="./contato.html" class="nav-link">Contato</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h2>Módulo Financeiro</h2>
+        <hr>
+    </div>
+
+    <!-- Planos Disponíveis -->
+    <div class="container mt-4">
+        <h4 class="text-success mb-3">Planos Disponíveis</h4>
+        <div class="row mb-5" id="listaPlanos">
+            <!-- Planos gerados via JS -->
+        </div>
+    </div>
+
+    <!-- Fluxo de Checkout -->
+    <div class="container mt-4 mb-5">
+        <div class="card shadow-sm border-secondary">
+            <div class="card-header bg-secondary text-white">
+                <h4 class="mb-0">Checkout (Assinatura)</h4>
+            </div>
+            <div class="card-body">
+                <form id="formCheckout">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Usuário</label>
+                            <select id="checkoutUsuario" class="form-select" required>
+                                <option value="">Selecione o Usuário</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Plano</label>
+                            <select id="checkoutPlano" class="form-select" required>
+                                <option value="">Selecione o Plano</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Método de Pagamento</label>
+                            <select id="checkoutMetodo" class="form-select" required>
+                                <option value="Cartão de Crédito">Cartão de Crédito</option>
+                                <option value="Boleto">Boleto Bancário</option>
+                                <option value="Pix">Pix</option>
+                            </select>
+                        </div>
+                        <div class="col-12 mt-4 text-end">
+                            <button type="submit" class="btn btn-success btn-lg px-5">Confirmar Pagamento</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabela de Transações -->
+    <div class="container mb-5">
+        <h4 class="text-primary">Transações e Assinaturas Realizadas</h4>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped mt-2">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID Transação</th>
+                        <th>Usuário</th>
+                        <th>Plano</th>
+                        <th>Valor Pago</th>
+                        <th>Método</th>
+                        <th>Data</th>
+                    </tr>
+                </thead>
+                <tbody id="listaTransacoes"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="./js/popper.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/db.js"></script>
+    <script src="./js/financeiro.js"></script>
+</body>
+
+</html>

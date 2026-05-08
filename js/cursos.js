@@ -1,38 +1,4 @@
-class Curso {
-    constructor(id, titulo, categoria, instrutor, nivel, horas) {
-        this.id = id;
-        this.titulo = titulo;
-        this.categoria = categoria;
-        this.instrutor = instrutor;
-        this.nivel = nivel;
-        this.horas = horas;
-    }
-}
-
-class Modulo {
-    constructor(id, cursoId, titulo, ordem) {
-        this.id = id;
-        this.cursoId = cursoId;
-        this.titulo = titulo;
-        this.ordem = ordem;
-    }
-}
-
-class Aula {
-    constructor(id, moduloId, titulo, tipo, url, duracao, ordem) {
-        this.id = id;
-        this.moduloId = moduloId;
-        this.titulo = titulo;
-        this.tipo = tipo;
-        this.url = url;
-        this.duracao = duracao;
-        this.ordem = ordem;
-    }
-}
-
-const cursos = [];
-const modulos = [];
-const aulas = [];
+// js/cursos.js
 
 const formCurso = document.getElementById("formCurso");
 const formModulo = document.getElementById("formModulo");
@@ -41,132 +7,150 @@ const formAula = document.getElementById("formAula");
 const listaCursos = document.getElementById("listaCursos");
 const cursoSelect = document.getElementById("cursoSelect");
 const moduloSelect = document.getElementById("moduloSelect");
+const categoriaSelect = document.getElementById("categoriaSelect");
 
-formCurso.addEventListener("submit", function (event) {
-    event.preventDefault();
+// Popular Select de Categorias
+function popularCategorias() {
+    if(!categoriaSelect) return;
+    categoriaSelect.innerHTML = '<option value="">Selecione a Categoria</option>';
+    DB.dados.categorias.forEach(cat => {
+        categoriaSelect.innerHTML += `<option value="${cat.id}">${cat.nome}</option>`;
+    });
+}
 
-    const titulo = document.getElementById("titulo").value;
-    const categoria = document.getElementById("categoria").value;
-    const instrutor = document.getElementById("instrutor").value;
-    const nivel = document.getElementById("nivel").value;
-    const horas = document.getElementById("horas").value;
+if(formCurso) {
+    formCurso.addEventListener("submit", function (event) {
+        event.preventDefault();
 
-    const novoCurso = new Curso(
-        cursos.length + 1,
-        titulo,
-        categoria,
-        instrutor,
-        nivel,
-        horas
-    );
+        const titulo = document.getElementById("titulo").value;
+        const idCategoria = Number(document.getElementById("categoriaSelect").value);
+        const instrutor = document.getElementById("instrutor").value; // Na versão completa, seria o ID do usuário
+        const nivel = document.getElementById("nivel").value;
+        const horas = Number(document.getElementById("horas").value);
+        const totalAulas = Number(document.getElementById("totalAulas").value);
+        const descricao = document.getElementById("descricaoCurso").value;
 
-    cursos.push(novoCurso);
+        const novoCurso = new Curso(
+            DB.dados.cursos.length + 1,
+            titulo,
+            descricao,
+            instrutor,
+            idCategoria,
+            nivel,
+            totalAulas,
+            horas
+        );
 
-    atualizarSelectCursos();
-    renderizarCursos();
+        DB.dados.cursos.push(novoCurso);
+        DB.salvar();
 
-    formCurso.reset();
-});
+        atualizarSelectCursos();
+        renderizarCursos();
+        formCurso.reset();
+        alert("Curso cadastrado com sucesso!");
+    });
+}
 
-formModulo.addEventListener("submit", function (event) {
-    event.preventDefault();
+if(formModulo) {
+    formModulo.addEventListener("submit", function (event) {
+        event.preventDefault();
 
-    const cursoId = Number(document.getElementById("cursoSelect").value);
-    const tituloModulo = document.getElementById("tituloModulo").value;
-    const ordemModulo = Number(document.getElementById("ordemModulo").value);
+        const cursoId = Number(document.getElementById("cursoSelect").value);
+        const tituloModulo = document.getElementById("tituloModulo").value;
+        const ordemModulo = Number(document.getElementById("ordemModulo").value);
 
-    const novoModulo = new Modulo(
-        modulos.length + 1,
-        cursoId,
-        tituloModulo,
-        ordemModulo
-    );
+        const novoModulo = new Modulo(
+            DB.dados.modulos.length + 1,
+            cursoId,
+            tituloModulo,
+            ordemModulo
+        );
 
-    modulos.push(novoModulo);
+        DB.dados.modulos.push(novoModulo);
+        DB.salvar();
 
-    atualizarSelectModulos();
-    renderizarCursos();
+        atualizarSelectModulos();
+        renderizarCursos();
+        formModulo.reset();
+        alert("Módulo cadastrado com sucesso!");
+    });
+}
 
-    formModulo.reset();
-});
+if(formAula) {
+    formAula.addEventListener("submit", function (event) {
+        event.preventDefault();
 
-formAula.addEventListener("submit", function (event) {
-    event.preventDefault();
+        const moduloId = Number(document.getElementById("moduloSelect").value);
+        const tituloAula = document.getElementById("tituloAula").value;
+        const tipoAula = document.getElementById("tipoAula").value;
+        const urlAula = document.getElementById("urlAula").value;
+        const duracaoAula = Number(document.getElementById("duracaoAula").value);
+        const ordemAula = Number(document.getElementById("ordemAula").value);
 
-    const moduloId = Number(document.getElementById("moduloSelect").value);
-    const tituloAula = document.getElementById("tituloAula").value;
-    const tipoAula = document.getElementById("tipoAula").value;
-    const urlAula = document.getElementById("urlAula").value;
-    const duracaoAula = Number(document.getElementById("duracaoAula").value);
-    const ordemAula = Number(document.getElementById("ordemAula").value);
+        const novaAula = new Aula(
+            DB.dados.aulas.length + 1,
+            moduloId,
+            tituloAula,
+            tipoAula,
+            urlAula,
+            duracaoAula,
+            ordemAula
+        );
 
-    const novaAula = new Aula(
-        aulas.length + 1,
-        moduloId,
-        tituloAula,
-        tipoAula,
-        urlAula,
-        duracaoAula,
-        ordemAula
-    );
+        DB.dados.aulas.push(novaAula);
+        DB.salvar();
 
-    aulas.push(novaAula);
-
-    renderizarCursos();
-
-    formAula.reset();
-});
+        renderizarCursos();
+        formAula.reset();
+        alert("Aula cadastrada com sucesso!");
+    });
+}
 
 function atualizarSelectCursos() {
+    if(!cursoSelect) return;
     cursoSelect.innerHTML = '<option value="">Selecione o Curso</option>';
 
-    cursos.forEach(function (curso) {
-        cursoSelect.innerHTML += `
-            <option value="${curso.id}">
-                ${curso.titulo}
-            </option>
-        `;
+    DB.dados.cursos.forEach(function (curso) {
+        cursoSelect.innerHTML += `<option value="${curso.id}">${curso.titulo}</option>`;
     });
 }
 
 function atualizarSelectModulos() {
+    if(!moduloSelect) return;
     moduloSelect.innerHTML = '<option value="">Selecione o Módulo</option>';
 
-    modulos.forEach(function (modulo) {
-        const curso = cursos.find(function (curso) {
-            return curso.id === modulo.cursoId;
-        });
-
+    DB.dados.modulos.forEach(function (modulo) {
+        const curso = DB.dados.cursos.find(c => c.id === modulo.cursoId);
         moduloSelect.innerHTML += `
             <option value="${modulo.id}">
-                ${curso.titulo} - Módulo ${modulo.ordem}: ${modulo.titulo}
+                ${curso ? curso.titulo : 'Curso Removido'} - Módulo ${modulo.ordem}: ${modulo.titulo}
             </option>
         `;
     });
 }
 
 function renderizarCursos() {
+    if(!listaCursos) return;
     listaCursos.innerHTML = "";
 
-    cursos.forEach(function (curso) {
-        const modulosDoCurso = modulos
-            .filter(function (modulo) {
-                return modulo.cursoId === curso.id;
-            })
-            .sort(function (a, b) {
-                return a.ordem - b.ordem;
-            });
+    if (DB.dados.cursos.length === 0) {
+        listaCursos.innerHTML = "<p class='text-muted'>Nenhum curso cadastrado ainda.</p>";
+        return;
+    }
+
+    DB.dados.cursos.forEach(function (curso) {
+        const cat = DB.dados.categorias.find(c => c.id === curso.idCategoria);
+        
+        const modulosDoCurso = DB.dados.modulos
+            .filter(modulo => modulo.cursoId === curso.id)
+            .sort((a, b) => a.ordem - b.ordem);
 
         let listaModulos = "";
 
         modulosDoCurso.forEach(function (modulo) {
-            const aulasDoModulo = aulas
-                .filter(function (aula) {
-                    return aula.moduloId === modulo.id;
-                })
-                .sort(function (a, b) {
-                    return a.ordem - b.ordem;
-                });
+            const aulasDoModulo = DB.dados.aulas
+                .filter(aula => aula.moduloId === modulo.id)
+                .sort((a, b) => a.ordem - b.ordem);
 
             let listaAulas = "";
 
@@ -181,11 +165,11 @@ function renderizarCursos() {
             });
 
             if (listaAulas === "") {
-                listaAulas = "<li>Nenhuma aula cadastrada.</li>";
+                listaAulas = "<li><small class='text-muted'>Nenhuma aula cadastrada.</small></li>";
             }
 
             listaModulos += `
-                <li>
+                <li class="mb-2">
                     <strong>Módulo ${modulo.ordem}:</strong> ${modulo.titulo}
                     <ul>
                         ${listaAulas}
@@ -195,25 +179,23 @@ function renderizarCursos() {
         });
 
         if (listaModulos === "") {
-            listaModulos = "<li>Nenhum módulo cadastrado.</li>";
+            listaModulos = "<li><small class='text-muted'>Nenhum módulo cadastrado.</small></li>";
         }
 
         listaCursos.innerHTML += `
-            <div class="col-md-4">
-                <div class="card curso-card h-100">
+            <div class="col-md-6">
+                <div class="card curso-card shadow-sm h-100">
                     <div class="card-body">
-                        <h5 class="card-title">${curso.titulo}</h5>
-                        <p class="card-text">
-                            <strong>Categoria:</strong> ${curso.categoria}<br>
-                            <strong>Instrutor:</strong> ${curso.instrutor}<br>
-                            <strong>Nível:</strong> ${curso.nivel}<br>
-                            <strong>Total de horas:</strong> ${curso.horas}h
+                        <h5 class="card-title text-success">${curso.titulo}</h5>
+                        <p class="card-text small text-muted">${curso.descricao}</p>
+                        <p class="card-text mb-2">
+                            <strong>Categoria:</strong> ${cat ? cat.nome : 'N/A'}<br>
+                            <strong>Nível:</strong> <span class="badge bg-secondary">${curso.nivel}</span><br>
+                            <strong>Total de horas:</strong> ${curso.totalHoras}h
                         </p>
-
                         <hr>
-
-                        <h6>Módulos e Aulas</h6>
-                        <ul>
+                        <h6 class="text-primary">Módulos e Aulas</h6>
+                        <ul class="list-unstyled">
                             ${listaModulos}
                         </ul>
                     </div>
@@ -222,3 +204,9 @@ function renderizarCursos() {
         `;
     });
 }
+
+// Inicializar a página
+popularCategorias();
+atualizarSelectCursos();
+atualizarSelectModulos();
+renderizarCursos();

@@ -1,59 +1,4 @@
-class Trilha {
-    constructor(id, titulo, descricao, idCategoria) {
-        this.id = id;
-        this.titulo = titulo;
-        this.descricao = descricao;
-        this.idCategoria = idCategoria;
-    }
-}
-
-class TrilhaCurso {
-    constructor(idTrilha, idCurso, ordem) {
-        this.idTrilha = idTrilha;
-        this.idCurso = idCurso;
-        this.ordem = ordem;
-    }
-}
-
-class Certificado {
-    constructor(id, nomeAluno, idCurso, idTrilha) {
-        this.id = id;
-        this.nomeAluno = nomeAluno;
-        this.idCurso = idCurso;
-        this.idTrilha = idTrilha;
-        this.codigoVerificacao = this.gerarCodigo();
-        this.dataEmissao = new Date().toLocaleDateString("pt-BR");
-    }
-
-    gerarCodigo() {
-        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        const bloco = function (n) {
-            let resultado = "";
-            for (let i = 0; i < n; i++) {
-                resultado += chars[Math.floor(Math.random() * chars.length)];
-            }
-            return resultado;
-        };
-        return "CERT-" + bloco(4) + "-" + bloco(4) + "-" + bloco(4);
-    }
-}
-
-const categorias = [
-    { id: 1, nome: "Desenvolvimento Web" },
-    { id: 2, nome: "Ciência de Dados" },
-    { id: 3, nome: "DevOps" },
-    { id: 4, nome: "Mobile" },
-];
-
-const cursosDisponiveis = [
-    { id: 1, titulo: "Curso Big Data" },
-    { id: 2, titulo: "Curso React" },
-    { id: 3, titulo: "Curso TypeScript" },
-];
-
-const trilhas = [];
-const trilhasCursos = [];
-const certificados = [];
+// js/trilhas.js
 
 const formTrilha = document.getElementById("formTrilha");
 const formTrilhaCurso = document.getElementById("formTrilhaCurso");
@@ -71,100 +16,129 @@ const listaCertificados = document.getElementById("listaCertificados");
 const certificadoVisual = document.getElementById("certificadoVisual");
 
 // POPULAR SELECTS INICIAIS
-categorias.forEach(function (cat) {
-    selectCategoria.innerHTML += '<option value="' + cat.id + '">' + cat.nome + "</option>";
-});
+function popularSelects() {
+    if(selectCategoria) {
+        selectCategoria.innerHTML = '<option value="">Selecione a Categoria</option>';
+        DB.dados.categorias.forEach(function (cat) {
+            selectCategoria.innerHTML += '<option value="' + cat.id + '">' + cat.nome + "</option>";
+        });
+    }
 
-cursosDisponiveis.forEach(function (curso) {
-    selectCursoAssoc.innerHTML += '<option value="' + curso.id + '">' + curso.titulo + "</option>";
-    selectCursoCert.innerHTML += '<option value="' + curso.id + '">' + curso.titulo + "</option>";
-});
+    if(selectCursoAssoc) {
+        selectCursoAssoc.innerHTML = '<option value="">Selecione o Curso</option>';
+        selectCursoCert.innerHTML = '<option value="">Selecione o Curso</option>';
+        DB.dados.cursos.forEach(function (curso) {
+            selectCursoAssoc.innerHTML += '<option value="' + curso.id + '">' + curso.titulo + "</option>";
+            selectCursoCert.innerHTML += '<option value="' + curso.id + '">' + curso.titulo + "</option>";
+        });
+    }
+}
 
 // CADASTRAR TRILHA
-formTrilha.addEventListener("submit", function (event) {
-    event.preventDefault();
+if(formTrilha) {
+    formTrilha.addEventListener("submit", function (event) {
+        event.preventDefault();
 
-    const titulo = document.getElementById("tituloTrilha").value;
-    const descricao = document.getElementById("descricaoTrilha").value;
-    const idCategoria = Number(selectCategoria.value);
+        const titulo = document.getElementById("tituloTrilha").value;
+        const descricao = document.getElementById("descricaoTrilha").value;
+        const idCategoria = Number(selectCategoria.value);
 
-    const novaTrilha = new Trilha(trilhas.length + 1, titulo, descricao, idCategoria);
-    trilhas.push(novaTrilha);
+        const novaTrilha = new Trilha(DB.dados.trilhas.length + 1, titulo, descricao, idCategoria);
+        DB.dados.trilhas.push(novaTrilha);
+        DB.salvar();
 
-    atualizarSelectsTrilhas();
-    renderizarTrilhas();
-    formTrilha.reset();
-});
+        atualizarSelectsTrilhas();
+        renderizarTrilhas();
+        formTrilha.reset();
+        alert("Trilha cadastrada com sucesso!");
+    });
+}
 
 // ASSOCIAR CURSO À TRILHA
-formTrilhaCurso.addEventListener("submit", function (event) {
-    event.preventDefault();
+if(formTrilhaCurso) {
+    formTrilhaCurso.addEventListener("submit", function (event) {
+        event.preventDefault();
 
-    const idTrilha = Number(selectTrilhaAssoc.value);
-    const idCurso = Number(selectCursoAssoc.value);
-    const ordem = Number(document.getElementById("ordemCurso").value);
+        const idTrilha = Number(selectTrilhaAssoc.value);
+        const idCurso = Number(selectCursoAssoc.value);
+        const ordem = Number(document.getElementById("ordemCurso").value);
 
-    const jaExiste = trilhasCursos.find(function (tc) {
-        return tc.idTrilha === idTrilha && tc.idCurso === idCurso;
+        const jaExiste = DB.dados.trilhasCursos.find(function (tc) {
+            return tc.idTrilha === idTrilha && tc.idCurso === idCurso;
+        });
+
+        if (jaExiste) {
+            alert("Este curso já está associado a esta trilha.");
+            return;
+        }
+
+        const novaAssoc = new TrilhaCurso(idTrilha, idCurso, ordem);
+        DB.dados.trilhasCursos.push(novaAssoc);
+        DB.salvar();
+
+        renderizarTrilhas();
+        formTrilhaCurso.reset();
+        alert("Curso associado à trilha com sucesso!");
     });
-
-    if (jaExiste) {
-        alert("Este curso já está associado a esta trilha.");
-        return;
-    }
-
-    const novaAssoc = new TrilhaCurso(idTrilha, idCurso, ordem);
-    trilhasCursos.push(novaAssoc);
-
-    renderizarTrilhas();
-    formTrilhaCurso.reset();
-});
+}
 
 // TROCAR TIPO DO CERTIFICADO
-selectTipoCert.addEventListener("change", function () {
-    const isTrilha = this.value === "trilha";
-    document.getElementById("grupoCertTrilha").classList.toggle("d-none", !isTrilha);
-    document.getElementById("grupoCertCurso").classList.toggle("d-none", isTrilha);
-});
+if(selectTipoCert) {
+    selectTipoCert.addEventListener("change", function () {
+        const isTrilha = this.value === "trilha";
+        document.getElementById("grupoCertTrilha").classList.toggle("d-none", !isTrilha);
+        document.getElementById("grupoCertCurso").classList.toggle("d-none", isTrilha);
+    });
+}
 
 // GERAR CERTIFICADO
-formCertificado.addEventListener("submit", function (event) {
-    event.preventDefault();
+if(formCertificado) {
+    formCertificado.addEventListener("submit", function (event) {
+        event.preventDefault();
 
-    const nomeAluno = document.getElementById("nomeAluno").value;
-    const tipo = selectTipoCert.value;
-    let idTrilha = null;
-    let idCurso = null;
-    let nomeTitulo = "";
+        const nomeAluno = document.getElementById("nomeAluno").value;
+        const tipo = selectTipoCert.value;
+        let idTrilha = null;
+        let idCurso = null;
+        let nomeTitulo = "";
 
-    if (tipo === "trilha") {
-        idTrilha = Number(selectTrilhaCert.value);
-        const t = trilhas.find(function (t) { return t.id === idTrilha; });
-        if (!t) { alert("Selecione uma trilha."); return; }
-        nomeTitulo = t.titulo;
-    } else {
-        idCurso = Number(selectCursoCert.value);
-        const c = cursosDisponiveis.find(function (c) { return c.id === idCurso; });
-        if (!c) { alert("Selecione um curso."); return; }
-        nomeTitulo = c.titulo;
-    }
+        if (tipo === "trilha") {
+            idTrilha = Number(selectTrilhaCert.value);
+            const t = DB.dados.trilhas.find(function (t) { return t.id === idTrilha; });
+            if (!t) { alert("Selecione uma trilha."); return; }
+            nomeTitulo = t.titulo;
+        } else {
+            idCurso = Number(selectCursoCert.value);
+            const c = DB.dados.cursos.find(function (c) { return c.id === idCurso; });
+            if (!c) { alert("Selecione um curso."); return; }
+            nomeTitulo = c.titulo;
+        }
 
-    const novoCert = new Certificado(certificados.length + 1, nomeAluno, idCurso, idTrilha);
-    certificados.push(novoCert);
+        // Simula busca por id de usuário caso real (estamos aceitando nome direto para o visual)
+        const idUsuarioMock = 1;
 
-    renderizarCertificadoVisual(novoCert, nomeTitulo, tipo);
-    renderizarListaCertificados();
-    formCertificado.reset();
-    document.getElementById("grupoCertTrilha").classList.remove("d-none");
-    document.getElementById("grupoCertCurso").classList.add("d-none");
-});
+        const novoCert = new Certificado(DB.dados.certificados.length + 1, idUsuarioMock, idCurso, idTrilha);
+        // Atribuir o nomeAluno pra exibição temporária
+        novoCert.nomeAluno = nomeAluno;
+        
+        DB.dados.certificados.push(novoCert);
+        DB.salvar();
+
+        renderizarCertificadoVisual(novoCert, nomeTitulo, tipo);
+        renderizarListaCertificados();
+        formCertificado.reset();
+        document.getElementById("grupoCertTrilha").classList.remove("d-none");
+        document.getElementById("grupoCertCurso").classList.add("d-none");
+    });
+}
 
 // ATUALIZAR SELECTS DE TRILHAS
 function atualizarSelectsTrilhas() {
+    if(!selectTrilhaAssoc) return;
     selectTrilhaAssoc.innerHTML = '<option value="">Selecione a Trilha</option>';
     selectTrilhaCert.innerHTML = '<option value="">Selecione a Trilha</option>';
 
-    trilhas.forEach(function (trilha) {
+    DB.dados.trilhas.forEach(function (trilha) {
         const opt = '<option value="' + trilha.id + '">' + trilha.titulo + "</option>";
         selectTrilhaAssoc.innerHTML += opt;
         selectTrilhaCert.innerHTML += opt;
@@ -173,17 +147,18 @@ function atualizarSelectsTrilhas() {
 
 // RENDERIZAR TRILHAS
 function renderizarTrilhas() {
+    if(!listaTrilhas) return;
     listaTrilhas.innerHTML = "";
 
-    if (trilhas.length === 0) {
+    if (DB.dados.trilhas.length === 0) {
         listaTrilhas.innerHTML = '<p class="text-muted fst-italic">Nenhuma trilha cadastrada ainda.</p>';
         return;
     }
 
-    trilhas.forEach(function (trilha) {
-        const cat = categorias.find(function (c) { return c.id === trilha.idCategoria; });
+    DB.dados.trilhas.forEach(function (trilha) {
+        const cat = DB.dados.categorias.find(function (c) { return c.id === trilha.idCategoria; });
 
-        const cursosNaTrilha = trilhasCursos
+        const cursosNaTrilha = DB.dados.trilhasCursos
             .filter(function (tc) { return tc.idTrilha === trilha.id; })
             .sort(function (a, b) { return a.ordem - b.ordem; });
 
@@ -193,7 +168,7 @@ function renderizarTrilhas() {
             itensCursos = '<li class="list-group-item text-muted fst-italic small">Nenhum curso associado ainda.</li>';
         } else {
             cursosNaTrilha.forEach(function (tc) {
-                const curso = cursosDisponiveis.find(function (c) { return c.id === tc.idCurso; });
+                const curso = DB.dados.cursos.find(function (c) { return c.id === tc.idCurso; });
                 itensCursos += `
                     <li class="list-group-item d-flex align-items-center gap-2">
                         <span class="badge-ordem">${tc.ordem}</span>
@@ -204,14 +179,14 @@ function renderizarTrilhas() {
 
         listaTrilhas.innerHTML += `
             <div class="col-md-6">
-                <div class="card h-100">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <strong>${trilha.titulo}</strong>
-                        <span class="badge bg-warning text-dark">${cat ? cat.nome : ""}</span>
+                <div class="card h-100 shadow-sm border-warning">
+                    <div class="card-header bg-warning text-dark d-flex justify-content-between align-items-center">
+                        <strong class="mb-0 fs-5">${trilha.titulo}</strong>
+                        <span class="badge bg-dark text-white">${cat ? cat.nome : ""}</span>
                     </div>
                     <div class="card-body">
                         <p class="card-text text-muted small">${trilha.descricao}</p>
-                        <p class="fw-semibold mb-1 small">Cursos da trilha (em sequência):</p>
+                        <p class="fw-semibold mb-1 small text-secondary">Cursos da trilha (em sequência):</p>
                         <ul class="list-group list-group-flush">${itensCursos}</ul>
                     </div>
                 </div>
@@ -221,6 +196,7 @@ function renderizarTrilhas() {
 
 // RENDERIZAR CERTIFICADO VISUAL
 function renderizarCertificadoVisual(cert, nomeTitulo, tipo) {
+    if(!certificadoVisual) return;
     certificadoVisual.classList.remove("d-none");
     certificadoVisual.innerHTML = `
         <div class="certificado-visual">
@@ -229,7 +205,7 @@ function renderizarCertificadoVisual(cert, nomeTitulo, tipo) {
             <div class="cert-nome">${cert.nomeAluno}</div>
             <p class="mb-1">concluiu com êxito ${tipo === "trilha" ? "a Trilha" : "o Curso"}</p>
             <div class="cert-titulo">${nomeTitulo}</div>
-            <hr class="my-3">
+            <hr class="my-3 border-warning">
             <div id="qrcode" class="d-flex justify-content-center my-3"></div>
             <p class="mb-1 small"><strong>Data de Emissão:</strong> ${cert.dataEmissao}</p>
             <p class="cert-codigo">Código de Verificação: <strong>${cert.codigoVerificacao}</strong></p>
@@ -240,38 +216,47 @@ function renderizarCertificadoVisual(cert, nomeTitulo, tipo) {
         text: cert.codigoVerificacao,
         width: 100,
         height: 100,
+        colorDark : "#F19E39",
+        colorLight : "#ffffff",
     });
 }
 
 // RENDERIZAR LISTA DE CERTIFICADOS
 function renderizarListaCertificados() {
-    if (certificados.length === 0) {
+    if(!listaCertificados) return;
+    if (DB.dados.certificados.length === 0) {
         listaCertificados.innerHTML = "";
         return;
     }
 
     let linhas = "";
-    certificados.forEach(function (cert) {
+    DB.dados.certificados.forEach(function (cert) {
         linhas += `
             <tr>
-                <td>${cert.nomeAluno}</td>
+                <td>${cert.nomeAluno || 'Usuário ' + cert.idUsuario}</td>
                 <td><code>${cert.codigoVerificacao}</code></td>
                 <td>${cert.dataEmissao}</td>
             </tr>`;
     });
 
     listaCertificados.innerHTML = `
-        <h5 class="mt-3">Certificados Emitidos</h5>
-        <table class="table table-sm table-bordered">
-            <thead class="table-dark">
-                <tr>
-                    <th>Aluno</th>
-                    <th>Código de Verificação</th>
-                    <th>Data</th>
-                </tr>
-            </thead>
-            <tbody>${linhas}</tbody>
-        </table>`;
+        <h5 class="mt-4 text-warning">Certificados Emitidos</h5>
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Aluno</th>
+                        <th>Código de Verificação</th>
+                        <th>Data</th>
+                    </tr>
+                </thead>
+                <tbody>${linhas}</tbody>
+            </table>
+        </div>`;
 }
 
+// INICIALIZAR
+popularSelects();
+atualizarSelectsTrilhas();
 renderizarTrilhas();
+renderizarListaCertificados();

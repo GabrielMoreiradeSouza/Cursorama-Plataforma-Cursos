@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursorama - Cadastro</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+</head>
+
+<body>
+
+    <nav class="navbar bg-dark navbar-expand-lg bg-body-tertiary border-bottom border-body" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="./index.html">
+                <img src="./img/school_24dp_F19E39_FILL0_wght400_GRAD0_opsz24.svg" alt="Logo" width="30" height="24"
+                    class="d-inline-block align-text-top">
+                Cursorama
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <!-- Gerado dinamicamente -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="card shadow">
+                    <div class="card-header bg-success text-white text-center">
+                        <h4>Cadastre-se no Cursorama</h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <form id="formCadastro">
+                            <div class="mb-3">
+                                <label class="form-label">Nome Completo</label>
+                                <input type="text" id="nomeCompleto" class="form-control" placeholder="Seu nome" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">E-mail</label>
+                                <input type="email" id="email" class="form-control" placeholder="Seu e-mail" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Senha</label>
+                                <input type="password" id="senha" class="form-control" placeholder="Sua senha" required>
+                            </div>
+                            <button type="submit" class="btn btn-success w-100">Criar Conta</button>
+                        </form>
+                        <hr>
+                        <div class="text-center">
+                            <p class="mb-0">Já tem uma conta?</p>
+                            <a href="./login.html" class="text-decoration-none">Faça Login</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/popper.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/db.js"></script>
+    <script src="./js/cadastro.js"></script>
+</body>
+
+</html>
