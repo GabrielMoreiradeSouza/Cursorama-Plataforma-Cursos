@@ -1,75 +1,128 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HTML, CSS e JavaScript</title>
-    <link rel="stylesheet" href="./css/bootstrap.min.css">
-</head>
+    <link rel="stylesheet" href="./css/bootstrap.min.css" />
+  </head>
 
-<body>
-
-    <nav class="navbar bg-dark navbar-expand-lg bg-body-tertiary border-bottom border-body" data-bs-theme="dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <img src="./img/school_24dp_F19E39_FILL0_wght400_GRAD0_opsz24.svg" alt="Logo" width="30" height="24"
-                    class="d-inline-block align-text-top">
-                Cursorama
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <!-- Gerado dinamicamente via db.js -->
-                </ul>
-            </div>
+  <body>
+    <nav
+      class="navbar bg-dark navbar-expand-lg bg-body-tertiary border-bottom border-body"
+      data-bs-theme="dark"
+    >
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img
+            src="./img/school_24dp_F19E39_FILL0_wght400_GRAD0_opsz24.svg"
+            alt="Logo"
+            width="30"
+            height="24"
+            class="d-inline-block align-text-top"
+          />
+          Cursorama
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <!-- Gerado dinamicamente via db.js -->
+          </ul>
         </div>
-
+      </div>
     </nav>
 
     <div class="container mt-5">
-        <div class="p-5 text-center bg-body-tertiary rounded-3 shadow-sm border">
-            <img src="./img/school_24dp_F19E39_FILL0_wght400_GRAD0_opsz24.svg" alt="Logo" width="80" class="mb-3">
-            <h1 class="text-body-emphasis">Bem-vindo ao Cursorama</h1>
-            <p class="lead mt-3">
-                Sua plataforma completa para gestão acadêmica e trilhas de conhecimento. 
-                Gerencie cursos, controle módulos e aulas, monitore o progresso dos alunos e administre as assinaturas.
-            </p>
-            <hr class="my-4 w-50 mx-auto">
-            <div class="d-flex justify-content-center gap-3">
-                <a href="./cursos.html" class="btn btn-primary btn-lg px-4">Ver Cursos</a>
-                <a href="./usuarios.html" class="btn btn-outline-secondary btn-lg px-4">Área de Matrículas</a>
-            </div>
+      <div class="p-5 text-center bg-body-tertiary rounded-3 shadow-sm border">
+        <img
+          src="./img/school_24dp_F19E39_FILL0_wght400_GRAD0_opsz24.svg"
+          alt="Logo"
+          width="80"
+          class="mb-3"
+        />
+        <h1 class="text-body-emphasis">Bem-vindo ao Cursorama</h1>
+        <p class="lead mt-3">
+          Sua plataforma completa para gestão acadêmica e trilhas de
+          conhecimento. Gerencie cursos, controle módulos e aulas, monitore o
+          progresso dos alunos e administre as assinaturas.
+        </p>
+        <hr class="my-4 w-50 mx-auto" />
+        <div class="d-flex justify-content-center gap-3">
+          <a
+            href="#"
+            onclick="verificarAcessoCursos()"
+            class="btn btn-primary btn-lg px-4"
+            >Ver Cursos</a
+          >
+          <a
+            href="#"
+            onclick="verificarAcessoUsuarios()"
+            class="btn btn-outline-secondary btn-lg px-4"
+            >Área de Matrículas</a
+          >
         </div>
+      </div>
 
-        <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
-            <div class="col d-flex align-items-start">
-                <div>
-                    <h3 class="fs-5 text-body-emphasis">1. Cursos e Trilhas</h3>
-                    <p>Organize o conteúdo didático de forma estruturada. Crie módulos, adicione aulas e construa trilhas de conhecimento.</p>
-                </div>
-            </div>
-            <div class="col d-flex align-items-start">
-                <div>
-                    <h3 class="fs-5 text-body-emphasis">2. Progresso do Aluno</h3>
-                    <p>Acompanhe aulas concluídas e emita certificados gerados automaticamente com código de verificação.</p>
-                </div>
-            </div>
-            <div class="col d-flex align-items-start">
-                <div>
-                    <h3 class="fs-5 text-body-emphasis">3. Gestão Financeira</h3>
-                    <p>Controle planos de assinatura, pagamentos e emita históricos de transações em tempo real.</p>
-                </div>
-            </div>
+      <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+        <div class="col d-flex align-items-start">
+          <div>
+            <h3 class="fs-5 text-body-emphasis">1. Cursos e Trilhas</h3>
+            <p>
+              Organize o conteúdo didático de forma estruturada. Crie módulos,
+              adicione aulas e construa trilhas de conhecimento.
+            </p>
+          </div>
         </div>
+        <div class="col d-flex align-items-start">
+          <div>
+            <h3 class="fs-5 text-body-emphasis">2. Progresso do Aluno</h3>
+            <p>
+              Acompanhe aulas concluídas e emita certificados gerados
+              automaticamente com código de verificação.
+            </p>
+          </div>
+        </div>
+        <div class="col d-flex align-items-start">
+          <div>
+            <h3 class="fs-5 text-body-emphasis">3. Gestão Financeira</h3>
+            <p>
+              Controle planos de assinatura, pagamentos e emita históricos de
+              transações em tempo real.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script src="./js/popper.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>
     <script src="./js/db.js"></script>
-</body>
+    <script>
+      function verificarAcessoCursos() {
+        if (DB.isUserLogado()) {
+          window.location.href = "./cursos.html";
+        } else {
+          window.location.href = "./login.html";
+        }
+      }
 
+      function verificarAcessoUsuarios() {
+        if (DB.isUserAdmin()) {
+          window.location.href = "./usuarios.html";
+        } else {
+          window.location.href = "./login.html";
+        }
+      }
+    </script>
+  </body>
 </html>
