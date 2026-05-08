@@ -14,6 +14,10 @@ const selectTipoCert = document.getElementById("selectTipoCert");
 const listaTrilhas = document.getElementById("listaTrilhas");
 const listaCertificados = document.getElementById("listaCertificados");
 const certificadoVisual = document.getElementById("certificadoVisual");
+const secaoCadastroTrilha = document.getElementById("secaoCadastroTrilha");
+const secaoAssociarCursoTrilha = document.getElementById("secaoAssociarCursoTrilha");
+const secaoCertificadosAdmin = document.getElementById("secaoCertificadosAdmin");
+const usuarioEhAdmin = DB.isUserAdmin();
 
 // POPULAR SELECTS INICIAIS
 function popularSelects() {
@@ -256,7 +260,15 @@ function renderizarListaCertificados() {
 }
 
 // INICIALIZAR
+if (!usuarioEhAdmin) {
+    if (secaoCadastroTrilha) secaoCadastroTrilha.classList.add("d-none");
+    if (secaoAssociarCursoTrilha) secaoAssociarCursoTrilha.classList.add("d-none");
+    if (secaoCertificadosAdmin) secaoCertificadosAdmin.classList.add("d-none");
+}
+
 popularSelects();
 atualizarSelectsTrilhas();
 renderizarTrilhas();
-renderizarListaCertificados();
+if (usuarioEhAdmin) {
+    renderizarListaCertificados();
+}

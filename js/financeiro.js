@@ -2,10 +2,15 @@
 
 const listaPlanos = document.getElementById("listaPlanos");
 const checkoutUsuario = document.getElementById("checkoutUsuario");
+const checkoutUsuarioContainer = document.getElementById("checkoutUsuarioContainer");
 const checkoutPlano = document.getElementById("checkoutPlano");
 const checkoutMetodo = document.getElementById("checkoutMetodo");
 const formCheckout = document.getElementById("formCheckout");
 const listaTransacoes = document.getElementById("listaTransacoes");
+const secaoTransacoes = document.getElementById("secaoTransacoes");
+
+const usuarioLogado = DB.getUsuarioLogado();
+const isAdmin = DB.isUserAdmin();
 
 // Renderizar Cards de Planos
 function renderizarPlanos() {
@@ -32,9 +37,9 @@ function renderizarPlanos() {
 
 // Popular selects do formulário
 function popularSelects() {
-    if(checkoutUsuario) {
+    if(checkoutUsuario && isAdmin) {
         checkoutUsuario.innerHTML = '<option value="">Selecione o Usuário</option>';
-        DB.dados.usuarios.forEach(u => {
+        DB.dados.usuarios.filter(u => !u.isAdmin).forEach(u => {
             checkoutUsuario.innerHTML += `<option value="${u.id}">${u.nomeCompleto} (${u.email})</option>`;
         });
     }
@@ -52,11 +57,15 @@ if(formCheckout) {
     formCheckout.addEventListener("submit", function(e) {
         e.preventDefault();
 
-        const idUsuario = Number(checkoutUsuario.value);
+        const idUsuario = isAdmin ? Number(checkoutUsuario.value) : Number(usuarioLogado?.id);
         const idPlano = Number(checkoutPlano.value);
         const metodo = checkoutMetodo.value;
 
         const plano = DB.dados.planos.find(p => p.id === idPlano);
+        if (!idUsuario || !plano) {
+            alert("Selecione os dados obrigatórios para continuar.");
+            return;
+        }
         
         // Simular a criação da assinatura
         const dataInicio = new Date();
@@ -125,6 +134,16 @@ function renderizarTransacoes() {
 }
 
 // Inicializar
+if (!isAdmin && checkoutUsuarioContainer) {
+    checkoutUsuarioContainer.classList.add("d-none");
+}
+
+if (!isAdmin && secaoTransacoes) {
+    secaoTransacoes.classList.add("d-none");
+}
+
 renderizarPlanos();
 popularSelects();
-renderizarTransacoes();
+if (isAdmin) {
+    renderizarTransacoes();
+}

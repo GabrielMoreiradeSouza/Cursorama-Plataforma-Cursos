@@ -150,10 +150,15 @@ class Pagamento {
 }
 
 const DB = {
+    adminPadrao: {
+        nomeCompleto: "Administrador Geral",
+        email: "admin@email.com",
+        senha: "123456"
+    },
     dados: {
         usuarios: [
             // Injetar Admin Padrão
-            new Usuario(1, "Administrador Geral", "admin@cursorama.com", btoa("admin"), true)
+            new Usuario(1, "Administrador Geral", "admin@email.com", btoa("123456"), true)
         ],
         categorias: [
             new Categoria(1, "Desenvolvimento Web", "Cursos sobre web dev"),
@@ -198,10 +203,20 @@ const DB = {
             this.salvar();
         }
 
+        this.garantirAdminPadrao();
+
         // Carregar sessão
         const session = localStorage.getItem('cursorama_session');
         if(session) {
-            this.usuarioLogado = JSON.parse(session);
+            const sessionUser = JSON.parse(session);
+            const usuarioAtual = this.dados.usuarios.find(u => u.id === sessionUser.id);
+            this.usuarioLogado = usuarioAtual || null;
+
+            if (this.usuarioLogado) {
+                localStorage.setItem('cursorama_session', JSON.stringify(this.usuarioLogado));
+            } else {
+                localStorage.removeItem('cursorama_session');
+            }
         }
     },
 
@@ -214,6 +229,10 @@ const DB = {
             return true;
         }
         return false;
+    },
+
+    getUsuarioLogado() {
+        return this.usuarioLogado;
     },
 
     logout() {
@@ -234,6 +253,30 @@ const DB = {
 
     isUserAdmin() {
         return this.usuarioLogado !== null && this.usuarioLogado.isAdmin === true;
+    },
+
+    garantirAdminPadrao() {
+        const adminEsperado = this.adminPadrao;
+        const admins = this.dados.usuarios.filter(u => u.isAdmin === true);
+        const adminComEmailPadrao = this.dados.usuarios.find(u => u.email === adminEsperado.email);
+
+        if (!adminComEmailPadrao) {
+            if (admins.length > 0) {
+                const adminPrincipal = admins[0];
+                adminPrincipal.nomeCompleto = adminEsperado.nomeCompleto;
+                adminPrincipal.email = adminEsperado.email;
+                adminPrincipal.senhaHash = btoa(adminEsperado.senha);
+                adminPrincipal.isAdmin = true;
+            } else {
+                const novoId = this.dados.usuarios.length > 0
+                    ? Math.max(...this.dados.usuarios.map(u => u.id || 0)) + 1
+                    : 1;
+                this.dados.usuarios.push(
+                    new Usuario(novoId, adminEsperado.nomeCompleto, adminEsperado.email, btoa(adminEsperado.senha), true)
+                );
+            }
+            this.salvar();
+        }
     }
 };
 
@@ -246,8 +289,7 @@ function verificarAcessoERenderizarNavbar() {
 
     // Páginas restritas
     const currentPage = window.location.pathname.split('/').pop();
-    const adminPages = ['cursos.html', 'trilhas.html', 'usuarios.html'];
-    const studentPages = ['progresso.html'];
+    const adminPages = ['cursos.html', 'usuarios.html'];
     const loggedInPages = ['financeiro.html', 'progresso.html', 'cursos.html', 'trilhas.html', 'usuarios.html'];
 
     if (adminPages.includes(currentPage) && !DB.isUserAdmin()) {
@@ -265,6 +307,7 @@ function verificarAcessoERenderizarNavbar() {
 
     if (DB.isUserAdmin()) {
         htmlNav += `
+            <li class="nav-item"><a href="./index.html" class="nav-link ${currentPage==='index.html'?'active':''}">Home</a></li>
             <li class="nav-item"><a href="./usuarios.html" class="nav-link ${currentPage==='usuarios.html'?'active':''}">Usuários</a></li>
             <li class="nav-item"><a href="./cursos.html" class="nav-link ${currentPage==='cursos.html'?'active':''}">Cursos</a></li>
             <li class="nav-item"><a href="./trilhas.html" class="nav-link ${currentPage==='trilhas.html'?'active':''}">Trilhas</a></li>
@@ -272,8 +315,14 @@ function verificarAcessoERenderizarNavbar() {
         `;
     } else if (DB.isUserLogado()) {
         htmlNav += `
+            <li class="nav-item"><a href="./index.html" class="nav-link ${currentPage==='index.html'?'active':''}">Home</a></li>
             <li class="nav-item"><a href="./progresso.html" class="nav-link ${currentPage==='progresso.html'?'active':''}">Meus Cursos</a></li>
+            <li class="nav-item"><a href="./trilhas.html" class="nav-link ${currentPage==='trilhas.html'?'active':''}">Trilhas</a></li>
             <li class="nav-item"><a href="./financeiro.html" class="nav-link ${currentPage==='financeiro.html'?'active':''}">Comprar Plano</a></li>
+        `;
+    } else {
+        htmlNav += `
+            <li class="nav-item"><a href="./index.html" class="nav-link ${currentPage==='index.html'?'active':''}">Home</a></li>
         `;
     }
 
